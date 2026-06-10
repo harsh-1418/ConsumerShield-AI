@@ -1,9 +1,9 @@
-fastapi
-uvicorn
-qdrant-client
-sentence-transformers
-pypdf
-google-generativeai
-langchain
-langgraph
-python-dotenv
+pip install fastapi
+pip install uvicorn
+pip install qdrant-client
+pip install sentence-transformers
+pip install pypdf
+pip install google-generativeai
+pip install langchain
+pip install langgraph
+pip install python-dotenv
