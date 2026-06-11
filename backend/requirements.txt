@@ -7,3 +7,7 @@ google-generativeai
 langchain
 langgraph
 python-dotenv
+langchain-community
+qdrant-client
+sentence-transformers
+tqdm
