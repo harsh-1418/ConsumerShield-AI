@@ -11,18 +11,19 @@ client = QdrantClient(
     api_key=os.getenv("QDRANT_API_KEY")
 )
 
-def retrieve(query: str, top_k: int = 5):
+def retrieve(query: str, top_k: int = 5, score_threshold: float = 0.5):
     vector = get_embedding(query)
     results = client.query_points(
         collection_name="consumer_laws",
         query=vector,
-        limit=top_k
+        limit=top_k,
+        score_threshold=score_threshold
     ).points
     return [
         {
             "source": r.payload["source"],
             "text": r.payload["text"],
-            "score": r.score
+            "score": round(r.score, 3)
         }
         for r in results
     ]

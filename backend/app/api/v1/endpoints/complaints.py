@@ -1,9 +1,19 @@
+
 from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import Optional
 import sys, os
 from pathlib import Path
 from google import genai
+
+# Add at top of complaints.py
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from db.mongo import complaints_col
+from datetime import datetime
+
+# Inside analyze_complaint(), before the return:
+
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent / "rag"))
 from retrieve import retrieve
@@ -40,6 +50,12 @@ Be concise and practical."""
     model="models/gemini-2.5-flash",
     contents=prompt
 )
+    complaints_col.insert_one({
+    "text": body.text,
+    "category": body.category,
+    "ai_analysis": response.text,
+    "timestamp": datetime.utcnow()
+})
     
     return {
         "complaint": body.text,
