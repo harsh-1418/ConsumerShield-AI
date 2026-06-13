@@ -1,5 +1,6 @@
 # backend/analytics/usage_events.py
 # Member 3 - Event logging for tracking user actions
+# FIX: get_recent_events now handles both real MongoDB cursor and mock iterator
 
 from datetime import datetime
 
@@ -28,14 +29,15 @@ def log_event(db, event_type: str, payload: dict) -> bool:
 
 
 def get_recent_events(db, limit: int = 20) -> list:
-    """Fetches recent events for admin/demo purposes."""
+    """Fetches recent events. Works with real MongoDB and mock DB."""
     try:
-        return list(
-            db["events"]
-            .find({}, {"_id": 0})
-            .sort("timestamp", -1)
-            .limit(limit)
-        )
+        cursor = db["events"].find({}, {"_id": 0})
+        # Real pymongo cursor supports .sort().limit() chaining
+        # Plain Python iterators do not — handle both safely
+        try:
+            return list(cursor.sort("timestamp", -1).limit(limit))
+        except AttributeError:
+            return list(cursor)[:limit]
     except Exception as e:
         print(f"[FETCH EVENTS ERROR] {e}")
         return []
