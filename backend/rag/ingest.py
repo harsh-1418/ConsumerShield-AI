@@ -61,10 +61,20 @@ for pdf_file in pdf_folder.glob("*.pdf"):
 
    # Replace the single upsert call at the bottom of the for loop with this:
 
-    # Upload in batches of 10
-    batch_size = 10
+# Upload in batches of 5 with retry
+    batch_size = 5
     for i in range(0, len(points), batch_size):
         batch = points[i:i + batch_size]
-        client.upsert(collection_name=COLLECTION, points=batch)
-    
+        for attempt in range(3):  # retry up to 3 times
+            try:
+                client.upsert(collection_name=COLLECTION, points=batch)
+                break
+            except Exception as e:
+                if attempt == 2:
+                    print(f"❌ Failed batch {i} after 3 attempts: {e}")
+                else:
+                    print(f"⚠️ Timeout on batch {i}, retrying...")
+                    import time
+                    time.sleep(2)
+
     print(f"✅ Ingested: {pdf_file.name} ({len(chunks)} chunks)")

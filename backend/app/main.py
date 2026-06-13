@@ -16,7 +16,7 @@ app = FastAPI(title="ConsumerShield AI", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "http://localhost:5173"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
