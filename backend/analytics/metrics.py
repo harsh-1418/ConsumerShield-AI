@@ -21,8 +21,9 @@ def get_platform_metrics(db) -> dict:
         avg_pipeline = [
             {"$group": {"_id": None, "avg": {"$avg": "$strength_score"}}}
         ]
-        avg_result = list(complaints.aggregate(avg_pipeline))
-        avg_score  = round(avg_result[0]["avg"], 1) if avg_result else 0.0
+        avg_result  = list(complaints.aggregate(avg_pipeline))
+        _raw_avg    = avg_result[0]["avg"] if avg_result else None
+        avg_score   = round(_raw_avg, 1) if _raw_avg is not None else 0.0
 
         return {
             "total_complaints":       total,
