@@ -71,12 +71,12 @@ def _call_gemini(prompt: str) -> str:
     if _USE_NEW_SDK and _api_key:
         client = _genai_new.Client(api_key=_api_key)
         response = client.models.generate_content(
-            model="models/gemini-2.5-flash",
+            model="models/gemini-2.0-flash",
             contents=prompt,
         )
         return response.text.strip()
     else:
-        model    = genai.GenerativeModel("gemini-2.5-flash")
+        model    = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content(prompt)
         return response.text.strip()
 
