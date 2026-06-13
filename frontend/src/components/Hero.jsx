@@ -142,7 +142,18 @@ export default function Hero() {
       id="home"
       ref={ref}
       aria-label="ConsumerShield AI hero"
-      className="relative isolate min-h-svh overflow-hidden bg-[#FFFFE3] text-[#4A4A4A]"
+      className="relative isolate min-h-svh overflow-hidden text-[#4A4A4A]"
+style={{
+  background: `
+    radial-gradient(circle at 72% 18%, rgba(109,129,150,0.08) 0%, transparent 35%),
+    linear-gradient(
+      180deg,
+      #F8F5E8 0%,
+      #F3EFD9 45%,
+      #ECE6D2 100%
+    )
+  `,
+}}
     >
       {/* Background — editorial paper surface */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -185,7 +196,7 @@ export default function Hero() {
           className="absolute inset-0 opacity-[0.5]"
           style={{
             background:
-              "radial-gradient(900px 280px at 18% 30%, rgba(74,74,74,0.035), transparent 60%), radial-gradient(700px 220px at 82% 65%, rgba(74,74,74,0.03), transparent 60%), radial-gradient(500px 180px at 55% 85%, rgba(74,74,74,0.025), transparent 60%)",
+              "radial-gradient(900px 280px at 18% 30%, rgba(79, 24, 24, 0.04), transparent 60%), radial-gradient(700px 220px at 82% 65%, rgba(74,74,74,0.03), transparent 60%), radial-gradient(500px 180px at 55% 85%, rgba(74,74,74,0.025), transparent 60%)",
           }}
         />
         {/* Gentle edge vignette — light falloff without darkening */}
@@ -198,8 +209,8 @@ export default function Hero() {
         />
 
         <svg
-          viewBox="0 0 1440 900"
-          className="absolute inset-0 h-full w-full opacity-[0.45]"
+          viewBox="0 0 400 400"
+          className="absolute inset-[15%] h-[70%] w-[70%] transition-all duration-700 group-hover:scale-105"
           preserveAspectRatio="none"
         >
           <defs>
@@ -228,7 +239,7 @@ export default function Hero() {
       <div className="mx-auto grid min-h-svh max-w-7xl grid-cols-1 items-center gap-14 px-6 pt-28 pb-16 lg:grid-cols-[60fr_40fr] lg:gap-12 lg:pt-24 lg:pb-24">
         {/* LEFT — Illustration + feature pills */}
         <div className="order-1 flex flex-col items-center gap-8 lg:order-1 lg:items-stretch">
-          <div className="relative mx-auto aspect-square w-full max-w-[640px]">
+          <div className="group relative mx-auto aspect-square w-full max-w-[640px]">
             {/* Focal light behind illustration */}
             <div
               aria-hidden
@@ -257,9 +268,15 @@ export default function Hero() {
             />
 
             {/* Concentric minimal rings */}
-            <div className="absolute inset-0 rounded-full border border-[#6D8196]/15" style={par(8)} />
-            <div className="absolute inset-[10%] rounded-full border border-[#6D8196]/10" style={par(14)} />
+            <div
+                className="orbit-slow absolute inset-0 rounded-full border-2 border-[#6D8196]/30 transition-all duration-700 group-hover:border-[#6D8196]/70"
+                style={par(8)}
+              />
 
+              <div
+                className="orbit-fast absolute inset-[10%] rounded-full border border-[#6D8196]/25 transition-all duration-700 group-hover:border-[#6D8196]/60"
+                style={par(14)}
+              />
             {/* Minimal network lines */}
             <svg viewBox="0 0 400 400" className="absolute inset-[15%] h-[70%] w-[70%]" aria-hidden style={par(6)}>
               {[
@@ -277,7 +294,7 @@ export default function Hero() {
                   x2={x2}
                   y2={y2}
                   stroke="#6D8196"
-                  strokeOpacity="0.35"
+                  strokeOpacity="0.5"
                   strokeWidth="0.8"
                 />
               ))}
@@ -294,14 +311,65 @@ export default function Hero() {
             </svg>
 
             {/* Center shield */}
-            <div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-float"
-              style={par(-14)}
-            >
-              <div className="relative grid h-36 w-36 place-items-center rounded-3xl bg-[#6D8196] text-[#FFFFE3] shadow-[0_24px_60px_-20px_rgba(109,129,150,0.7)] ring-1 ring-[#4A4A4A]/10">
-                <Shield className="h-16 w-16" strokeWidth={1.4} />
+                <div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-float"
+                  style={par(-14)}
+                >
+                  <div className="relative">
+
+                    {/* Ambient glow */}
+                    <div
+                      className="absolute inset-0 scale-150 rounded-full blur-3xl"
+                      style={{
+                        background:
+                          "radial-gradient(circle, rgba(255,255,227,0.45), transparent 70%)",
+                      }}
+                    />
+
+                    {/* Shield box */}
+                    <div
+                      className="relative grid h-36 w-36 place-items-center rounded-3xl text-[#FFFFE3]"
+                      style={{
+                        background:
+                          "linear-gradient(135deg,#8397AA 0%,#6D8196 45%,#556879 100%)",
+                        boxShadow:
+                          "0 30px 80px -20px rgba(109,129,150,0.45)",
+                      }}
+                    >
+                      <div
+                className="relative grid h-36 w-36 place-items-center rounded-3xl text-[#FFFFE3]"
+                style={{
+                  background:
+                    "linear-gradient(135deg,#8397AA 0%,#6D8196 45%,#556879 100%)",
+                  boxShadow:
+                    "0 30px 80px -20px rgba(109,129,150,0.45)",
+                }}
+              >
+
+                <div
+                  className="absolute h-28 w-28 rounded-full blur-3xl"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(255,255,227,0.45), transparent 70%)",
+                  }}
+                />
+
+                <Shield
+                  className="relative z-10 h-16 w-16"
+                  strokeWidth={1.4}
+                  style={{
+                    filter:
+                      "drop-shadow(0 0 6px rgba(255,255,227,0.8)) drop-shadow(0 0 18px rgba(255,255,227,0.4))",
+                  }}
+                />
+
               </div>
-            </div>
+                    </div>
+
+                  </div>
+                </div>
+                              
+                          
 
             {/* Scales of justice */}
             <div className="absolute left-[4%] top-[44%] animate-float [animation-delay:0.8s]" style={par(-22)}>

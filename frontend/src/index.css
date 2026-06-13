@@ -46,3 +46,53 @@
   animation: legal-scroll 180s linear infinite;
   will-change: transform;
 }
+
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.group:hover .orbit-slow {
+  animation: orbit 14s linear infinite;
+}
+
+.group:hover .orbit-fast {
+  animation: orbit 10s linear infinite reverse;
+}
+
+
+@keyframes legal-scroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+@keyframes connector-travel {
+  from { left: 0%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  to   { left: 100%; opacity: 0; }
+}
+@keyframes connector-travel-vertical {
+  from { top: 0%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  to   { top: 100%; opacity: 0; }
+}
+
+.animate-legal-scroll { animation: legal-scroll linear infinite; }
+@keyframes legal-scroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.animate-legal-scroll { animation: legal-scroll linear infinite; }
+.animate-breathe { animation: breathe 6s ease-in-out infinite; }
