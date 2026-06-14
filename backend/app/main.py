@@ -14,13 +14,19 @@ from api.v1.router import router
 
 app = FastAPI(title="ConsumerShield AI", version="1.0.0")
 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173"],
+    allow_origins=[
+        FRONTEND_URL,
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://consumershield.vercel.app"
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 app.include_router(router, prefix="/api/v1")
 
 @app.get("/health")
