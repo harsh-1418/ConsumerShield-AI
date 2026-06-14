@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Scale, Menu, X } from "lucide-react";
-
+import { Link } from "react-router-dom";
 const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "New Complaint", href: "#new-complaint" },
-  { label: "Case Insights", href: "#case-insights" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "About", href: "#about" },
+  { label: "Home", href: "/" },
+  { label: "New Complaint", href: "/new-complaint" },
+  { label: "Case Insights", href: "/case-insights" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "About", href: "/#about" },
 ];
 
 export default function Navbar() {
@@ -32,27 +32,28 @@ export default function Navbar() {
         aria-label="Primary"
         className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4"
       >
-        <a
-          href="#home"
-          className="flex items-center gap-2.5 text-[#4A4A4A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6D8196] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFE3] rounded-md"
-        >
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#6D8196] text-[#FFFFE3] shadow-sm">
-            <Scale className="h-5 w-5" aria-hidden />
-          </span>
-          <span className="text-base font-semibold tracking-tight">
-            ConsumerShield <span className="text-[#6D8196]">AI</span>
-          </span>
-        </a>
+        <Link
+            to="/"
+            className="flex items-center gap-2.5 text-[#4A4A4A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6D8196] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFE3] rounded-md"
+          >
+            <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#6D8196] text-[#FFFFE3] shadow-sm">
+              <Scale className="h-5 w-5" aria-hidden />
+            </span>
+
+            <span className="text-base font-semibold tracking-tight">
+              ConsumerShield <span className="text-[#6D8196]">AI</span>
+            </span>
+          </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((l) => (
             <li key={l.label}>
-              <a
-                href={l.href}
-                className="rounded-md px-3.5 py-2 text-sm font-medium text-[#4A4A4A]/80 transition-colors duration-200 hover:bg-[#6D8196]/10 hover:text-[#4A4A4A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6D8196]"
+              <Link
+                to={l.href}
+                className="rounded-md px-3.5 py-2 text-sm font-medium text-[#4A4A4A]/80 transition-colors duration-200 hover:bg-[#6D8196]/10 hover:text-[#4A4A4A]"
               >
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
