@@ -1,13 +1,17 @@
 import { useLocation, Navigate } from "react-router-dom";
+import Navbar from "../components/layout/Navbar";
 
 export default function CaseInsights() {
   const { state } = useLocation();
 
   if (!state) {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h2>No case analysis available. Please analyze a complaint first.</h2>
-    </div>
+    <>
+      <Navbar />
+      <div className="min-h-screen pt-28 flex items-center justify-center">
+        <h2>No case analysis available. Please analyze a complaint first.</h2>
+      </div>
+    </>
   );
 }
 
@@ -32,7 +36,10 @@ export default function CaseInsights() {
     [];
 
   return (
-    <div className="min-h-screen bg-[#FFFFE3] py-24 px-6">
+  <>
+    <Navbar />
+
+    <div className="min-h-screen bg-[#FFFFE3] pt-28 px-6 pb-10">
       <div className="mx-auto max-w-6xl space-y-8">
 
         <div>
@@ -179,5 +186,6 @@ export default function CaseInsights() {
 
       </div>
     </div>
+    </>
   );
 }

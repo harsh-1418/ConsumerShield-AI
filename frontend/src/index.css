@@ -42,9 +42,18 @@
   }
 }
 
+@keyframes legal-scroll {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(-100%);
+  }
+}
+
 .animate-legal-scroll {
-  animation: legal-scroll 180s linear infinite;
-  will-change: transform;
+  animation: legal-scroll 48s linear infinite;
 }
 
 
@@ -96,3 +105,38 @@
 
 .animate-legal-scroll { animation: legal-scroll linear infinite; }
 .animate-breathe { animation: breathe 6s ease-in-out infinite; }
+@keyframes legalScroll0 {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes legalScroll1 {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes legalScroll2 {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes legalScroll3 {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}

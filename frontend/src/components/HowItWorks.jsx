@@ -1,338 +1,364 @@
-import React, { useRef, useEffect, useState } from "react";
-import { PenLine, BrainCircuit, Scale, FileText } from "lucide-react";
-
-/**
- * ConsumerShield AI — "How It Works" Section
- * Continuation of Hero / Features design system.
- *
- * Palette:
- *  - Backgrounds: #FCFAF2, #F8F5E8, #F4F0E2
- *  - Accent:      #6D8196
- *  - Text:        #4A4A4A
- */
+import { useEffect, useRef, useState } from "react";
+import { FileText, Brain, Scale, Building2, ArrowRight } from "lucide-react";
 
 const STEPS = [
   {
-    id: "01",
-    title: "Describe Your Issue",
-    desc: "Enter your complaint naturally with supporting details.",
-    icon: PenLine,
+    num: "01",
+    title: "Submit Complaint",
+    Icon: FileText,
+    desc: "Describe your consumer issue and upload supporting details. ConsumerShield AI extracts key information to prepare your complaint.",
   },
   {
-    id: "02",
-    title: "AI Analysis",
-    desc: "ConsumerShield AI analyzes your complaint using AI and legal reasoning.",
-    icon: BrainCircuit,
+    num: "02",
+    title: "AI Legal Analysis",
+    Icon: Brain,
+    desc: "The AI analyzes your complaint using consumer protection laws and legal reasoning to identify rights and applicable provisions.",
   },
   {
-    id: "03",
-    title: "Rights Detection",
-    desc: "Applicable consumer rights and legal provisions are automatically identified.",
-    icon: Scale,
+    num: "03",
+    title: "Case Strength Prediction",
+    Icon: Scale,
+    desc: "Receive an intelligent estimate of your case strength along with legal insights and supporting consumer rights.",
   },
   {
-    id: "04",
-    title: "Receive Guidance",
-    desc: "Receive complaint drafts, recommendations and suggested next actions.",
-    icon: FileText,
+    num: "04",
+    title: "Authority Recommendation",
+    Icon: Building2,
+    desc: "Get recommendations on the appropriate authority, complaint process, and actionable next steps.",
   },
 ];
 
-const LEGAL_TEXT = `Consumer Protection Act, 2019 — Section 2(7) "consumer" means any person who buys any goods for a consideration... Right to be heard, Right to seek redressal, Right to consumer awareness, Right to safety, Right to choose... RBI Integrated Ombudsman Scheme, 2021 — Clause 9: The Ombudsman shall endeavour to promote, through conciliation or mediation, a settlement between the complainant and the Regulated Entity... No fee shall be charged by the Office of the Ombudsman for any complaint... Rule 4(5): Every e-commerce entity shall establish an adequate grievance redressal mechanism... `;
+const LEGAL_TERMS = [
+  "Consumer Protection Act",
+  "Consumer Rights",
+  "Legal Notice",
+  "District Consumer Commission",
+  "Consumer Complaint",
+  "Digital Commerce",
+  "Compensation",
+  "Grievance Redressal",
+  "AI Legal Analysis",
+  "Consumer Handbook",
+  "National Consumer Helpline",
+  "Unfair Trade Practice",
+  "Product Liability",
+  "Restitution",
+  "Adjudication",
+];
+
+function DriftingLegalBg() {
+  const line = LEGAL_TERMS.join("  •  ");
+  const columns = Array.from({ length: 4 });
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 overflow-hidden select-none"
+      style={{
+        maskImage:
+          "radial-gradient(ellipse at center, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.4) 70%, transparent 100%)",
+        WebkitMaskImage:
+          "radial-gradient(ellipse at center, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.4) 70%, transparent 100%)",
+      }}
+    >
+      <style>{`
+        @keyframes legalScrollUp {
+          from { transform: translateY(0); }
+          to { transform: translateY(-50%); }
+        }
+      `}</style>
+
+      {columns.map((_, i) => (
+        <div
+          key={i}
+          className="absolute top-0 bottom-0 overflow-hidden"
+          style={{
+            left: `${i * 25}%`,
+            width: "25%",
+            opacity: 0.1,
+          }}
+        >
+          <div
+            className="font-serif text-[10px] tracking-wide text-[#4A4A4A]"
+            style={{
+              whiteSpace: "pre-wrap",
+              lineHeight: "2.4",
+              animation: `legalScrollUp ${120 + i * 25}s linear infinite`,
+              animationDelay: `${-i * 30}s`,
+            }}
+          >
+            {Array(40).fill(line).join("\n\n")}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function useInView(opts = {}) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    if (!ref.current || inView) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.18, ...opts }
+    );
+    obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [inView, opts]);
+  return { ref, inView };
+}
 
 export default function HowItWorks() {
-  const [visible, setVisible] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(null);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) obs.observe(sectionRef.current);
-    return () => obs.disconnect();
-  }, []);
+  const { ref, inView } = useInView();
+  const [hovered, setHovered] = useState(null);
 
   return (
     <section
-      ref={sectionRef}
-      className="relative min-h-screen w-full overflow-hidden flex flex-col items-center justify-center py-24 px-6"
-      style={{ background: "linear-gradient(180deg, #FCFAF2 0%, #F8F5E8 55%, #F4F0E2 100%)" }}
+      id="how-it-works"
+      ref={ref}
+      className="relative w-full overflow-hidden py-28 sm:py-36"
+      style={{
+        background:
+          "radial-gradient(ellipse at top, #FCFAF2 0%, #F8F5E8 60%, #F3EFDC 100%)",
+      }}
     >
-      <BackgroundTexture />
+      <DriftingLegalBg />
 
-      {/* Header */}
+      {/* soft ambient blooms */}
       <div
-        className={`relative z-10 text-center max-w-3xl mx-auto mb-20 transition-all duration-1000 ease-out ${
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        }`}
-      >
-        <p
-          className="text-sm font-semibold tracking-[0.2em] mb-4"
-          style={{ color: "#6D8196" }}
-        >
-          HOW IT WORKS
-        </p>
-        <h2
-          className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-6"
-          style={{ color: "#4A4A4A" }}
-        >
-          From Complaint
-          <br />
-          To Resolution
-        </h2>
-        <p className="text-base sm:text-lg leading-relaxed" style={{ color: "#6D8196" }}>
-          ConsumerShield AI transforms consumer complaints into actionable legal
-          guidance using AI-powered analysis and consumer protection intelligence.
-        </p>
-      </div>
+        aria-hidden
+        className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-[520px] w-[860px] rounded-full blur-3xl"
+        style={{ background: "radial-gradient(closest-side, rgba(109,129,150,0.12), transparent)" }}
+      />
 
-      {/* Workflow */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto">
-        {/* Desktop / large tablet: horizontal row with connectors */}
-        <div className="hidden lg:flex items-stretch justify-between gap-0">
-          {STEPS.map((step, i) => (
-            <React.Fragment key={step.id}>
-              <StepCard
-                step={step}
-                index={i}
-                visible={visible}
-                isActive={activeIndex === i}
-                onHover={() => setActiveIndex(i)}
-                onLeave={() => setActiveIndex(null)}
-                className="flex-1"
-              />
-              {i < STEPS.length - 1 && (
-                <Connector
-                  visible={visible}
-                  index={i}
-                  active={activeIndex === i || activeIndex === i + 1}
-                />
-              )}
-            </React.Fragment>
-          ))}
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
+        {/* Heading */}
+        <div className="mx-auto max-w-3xl text-center">
+          <div
+            className="inline-flex items-center gap-2 rounded-full border border-[#6D8196]/20 bg-white/50 px-4 py-1.5 text-xs font-medium tracking-wider uppercase text-[#6D8196] backdrop-blur-sm"
+            style={{
+              opacity: inView ? 1 : 0,
+              filter: inView ? "blur(0)" : "blur(8px)",
+              transform: inView ? "translateY(0)" : "translateY(12px)",
+              transition: "all 700ms cubic-bezier(0.22,1,0.36,1)",
+            }}
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#6D8196]" />
+            Process
+          </div>
+          <h2
+            className="mt-6 text-4xl font-bold leading-[1.08] tracking-tight text-[#4A4A4A] sm:text-5xl lg:text-[3.5rem]"
+            style={{
+              opacity: inView ? 1 : 0,
+              filter: inView ? "blur(0)" : "blur(10px)",
+              transform: inView ? "translateY(0)" : "translateY(16px)",
+              transition: "all 800ms cubic-bezier(0.22,1,0.36,1) 100ms",
+            }}
+          >
+            How It Works
+          </h2>
+          <p
+            className="mt-5 text-lg text-[#4A4A4A]/80 leading-relaxed"
+            style={{
+              opacity: inView ? 1 : 0,
+              filter: inView ? "blur(0)" : "blur(8px)",
+              transform: inView ? "translateY(0)" : "translateY(14px)",
+              transition: "all 800ms cubic-bezier(0.22,1,0.36,1) 220ms",
+            }}
+          >
+            From complaint submission to legal guidance in four intelligent steps.
+          </p>
         </div>
 
-        {/* Tablet: 2x2 grid */}
-        <div className="hidden md:grid lg:hidden grid-cols-2 gap-6">
-          {STEPS.map((step, i) => (
-            <StepCard
-              key={step.id}
-              step={step}
-              index={i}
-              visible={visible}
-              isActive={activeIndex === i}
-              onHover={() => setActiveIndex(i)}
-              onLeave={() => setActiveIndex(null)}
-            />
-          ))}
-        </div>
+        {/* Cards */}
+        <div
+          className="mt-20 grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-y-10 lg:gap-y-0 lg:gap-x-2 items-stretch"
+          onMouseLeave={() => setHovered(null)}
+        >
+          {STEPS.map((step, idx) => {
+            const isHovered = hovered === idx;
+            const dimmed = false;
 
-        {/* Mobile: vertical timeline */}
-        <div className="flex md:hidden flex-col items-center gap-0">
-          {STEPS.map((step, i) => (
-            <React.Fragment key={step.id}>
-              <StepCard
-                step={step}
-                index={i}
-                visible={visible}
-                isActive={activeIndex === i}
-                onHover={() => setActiveIndex(i)}
-                onLeave={() => setActiveIndex(null)}
-                className="w-full"
-              />
-              {i < STEPS.length - 1 && (
-                <VerticalConnector visible={visible} index={i} active={activeIndex === i} />
-              )}
-            </React.Fragment>
-          ))}
+            return (
+              <div key={step.num} className="contents">
+                <div
+                  onMouseEnter={() => setHovered(idx)}
+                  className="group relative"
+                  style={{
+                    opacity: inView ? 1 : 0,
+                    transform: inView ? "translateY(0)" : "translateY(24px)",
+                    transition: `opacity 700ms cubic-bezier(0.22,1,0.36,1) ${
+                      400 + idx * 140
+                    }ms, transform 700ms cubic-bezier(0.22,1,0.36,1) ${
+                      400 + idx * 140
+                    }ms`,
+                  }}
+                >
+                  <article
+                    aria-label={`Step ${step.num}: ${step.title}`}
+                    className={`relative h-full overflow-hidden rounded-3xl border backdrop-blur-xl ${
+                      isHovered
+                        ? "border-[#D4AF37]/40 bg-white/70"
+                        : "border-white/60 bg-white/55"
+                    }`}
+                    style={{
+                      transition:
+                        "transform 450ms cubic-bezier(0.22,1,0.36,1), box-shadow 450ms ease, background 450ms ease, opacity 450ms ease",
+                      transform: isHovered
+                        ? "translateY(-12px) scale(1.06)"
+                        : "scale(1)",
+                      opacity: dimmed && !isNeighbor ? 0.78 : 1,
+                      boxShadow: isHovered
+                        ? "0 30px 70px -30px rgba(212,175,55,0.45), 0 0 0 1px rgba(212,175,55,0.25), inset 0 1px 0 rgba(255,255,255,0.9)"
+                        : "0 12px 30px -18px rgba(74,74,74,0.25), inset 0 1px 0 rgba(255,255,255,0.8)",
+                      minHeight: isHovered ? 360 : 300,
+                    }}
+                  >
+                    {/* radial hover glow */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "radial-gradient(circle at 50% 0%, rgba(212,175,55,0.18), transparent 60%)",
+                        opacity: isHovered ? 1 : 0,
+                        transition: "opacity 450ms ease",
+                      }}
+                    />
+
+                    <div className="relative flex h-full flex-col p-8">
+                      {/* Step number */}
+                      <div
+                        className="font-serif text-5xl text-[#6D8196]/70"
+                        style={{
+                          transition: "color 450ms ease, transform 450ms ease",
+                          color: isHovered ? "#6D8196" : "rgba(109,129,150,0.55)",
+                        }}
+                      >
+                        {step.num}
+                      </div>
+
+                      {/* Icon */}
+                      <div
+                        className="mt-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#6D8196]/20 bg-gradient-to-br from-white to-[#F8F5E8]"
+                        style={{
+                          transition:
+                            "transform 450ms cubic-bezier(0.22,1,0.36,1), box-shadow 450ms ease",
+                          transform: isHovered
+                            ? "rotate(-4deg) scale(1.08) translateY(-4px)"
+                            : "rotate(0deg) scale(1)",
+                          boxShadow: isHovered
+                            ? "0 25px 60px rgba(0,0,0,0.12), 0 0 30px rgba(212,175,55,0.20), inset 0 1px 0 rgba(255,255,255,0.9)"
+                            : "none",
+                        }}
+                      >
+                        <step.Icon className="h-6 w-6 text-[#4A4A4A]" strokeWidth={1.5} />
+                      </div>
+
+                      {/* Title */}
+                      <h3
+                        className="text-2xl font-bold leading-tight tracking-tight text-[#4A4A4A]"
+                        style={{
+                          transition: "margin 450ms cubic-bezier(0.22,1,0.36,1)",
+                          marginTop: isHovered ? "1.25rem" : "auto",
+                          paddingTop: isHovered ? 0 : "1.5rem",
+                        }}
+                      >
+                        {step.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p
+                        className="mt-4 text-base leading-7 text-[#4A4A4A]/80"
+                        style={{
+                          opacity: isHovered ? 1 : 0,
+                          maxHeight: isHovered ? 200 : 0,
+                          transform: isHovered
+                            ? "translateY(0)"
+                            : "translateY(8px)",
+                          marginTop: isHovered ? "0.75rem" : 0,
+                          transition:
+                            "opacity 400ms ease 80ms, transform 450ms cubic-bezier(0.22,1,0.36,1) 80ms, max-height 450ms ease, margin 450ms ease",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {step.desc}
+                      </p>
+                    </div>
+                  </article>
+                </div>
+
+                {/* Connector */}
+                {idx < STEPS.length - 1 && (
+                  <div
+                    aria-hidden
+                    className="hidden lg:flex items-center justify-center px-1"
+                    style={{
+                      opacity: inView ? 1 : 0,
+                      transition: `opacity 600ms ease ${
+                        900 + idx * 140
+                      }ms`,
+                    }}
+                  >
+                    <Connector
+                      glow={hovered === idx || hovered === idx + 1}
+                    />
+                  </div>
+                )}
+
+                {/* Mobile down arrow */}
+                {idx < STEPS.length - 1 && (
+                  <div
+                    aria-hidden
+                    className="flex lg:hidden items-center justify-center"
+                    style={{
+                      opacity: inView ? 1 : 0,
+                      transition: `opacity 600ms ease ${
+                        900 + idx * 140
+                      }ms`,
+                    }}
+                  >
+                    <div className="h-10 w-px bg-gradient-to-b from-transparent via-[#6D8196]/40 to-transparent" />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-/* ---------------------------------------------------------------------- */
-/* Background: faint scrolling legal text + soft lighting + vignette       */
-/* ---------------------------------------------------------------------- */
-
-function BackgroundTexture() {
-  const repeated = Array.from({ length: 8 }).fill(LEGAL_TEXT).join(" ");
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-      {/* Scrolling legal text columns */}
-      <div className="absolute inset-0 flex gap-16 opacity-[0.1]" style={{ color: "#4A4A4A" }}>
-        {[0, 1, 2, 3].map((col) => (
-          <div
-            key={col}
-            className="flex-1 font-serif text-[11px] leading-6 whitespace-pre-wrap animate-legal-scroll"
-            style={{ animationDuration: `${100 + col * 8}s`, animationDelay: `${col * -25}s` }}
-          >
-            {repeated}
-          </div>
-        ))}
-      </div>
-
-      {/* Soft radial light */}
-      <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full opacity-50"
-        style={{ background: "radial-gradient(circle, #FCFAF2 0%, transparent 70%)" }}
-      />
-
-      {/* Continuation depth gradient from Features section */}
-      <div
-        className="absolute top-0 left-0 right-0 h-40"
-        style={{ background: "linear-gradient(180deg, #F8F5E8 0%, transparent 100%)" }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 55%, rgba(74,74,74,0.05) 100%)",
-        }}
-      />
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/* Step card                                                                */
-/* ---------------------------------------------------------------------- */
-
-function StepCard({ step, index, visible, isActive, onHover, onLeave, className = "" }) {
-  const Icon = step.icon;
+function Connector({ glow }) {
   return (
     <div
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      className={`group relative rounded-[32px] p-8 border backdrop-blur-md transition-all duration-500 ease-out cursor-default ${className}`}
+      className="relative flex items-center"
       style={{
-        background: "rgba(255,255,255,0.6)",
-        borderColor: isActive ? "#6D819670" : "#6D819620",
-        boxShadow: isActive
-          ? "0 20px 40px -16px #6D819650"
-          : "0 6px 20px -12px #6D819620",
-        transform: isActive ? "translateY(-4px) scale(1.02)" : "translateY(0) scale(1)",
-        opacity: visible ? 1 : 0,
-        transitionProperty: "all, opacity, transform",
-        transitionDelay: `${index * 150 + 200}ms`,
-        translate: visible ? "0 0" : "0 24px",
+        transition: "filter 400ms ease, opacity 400ms ease",
+        filter: glow
+          ? "drop-shadow(0 0 8px rgba(212,175,55,0.45))"
+          : "none",
+        opacity: glow ? 1 : 0.55,
       }}
     >
-      <div className="flex items-center justify-between mb-6">
-        <span className="text-xs font-bold tracking-widest" style={{ color: "#6D8196" }}>
-          {step.id}
-        </span>
-        <div
-          className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform duration-500"
-          style={{
-            background: "#F4F0E2",
-            transform: isActive ? "scale(1.15) rotate(6deg)" : "scale(1) rotate(0deg)",
-          }}
-        >
-          <Icon className="w-6 h-6" style={{ color: "#6D8196" }} strokeWidth={1.75} />
-        </div>
-      </div>
-      <h3 className="text-lg font-bold mb-2" style={{ color: "#4A4A4A" }}>
-        {step.title}
-      </h3>
-      <p className="text-sm leading-relaxed" style={{ color: "#6D8196" }}>
-        {step.desc}
-      </p>
+      <div
+        className="h-px w-10"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(109,129,150,0.15), rgba(109,129,150,0.65))",
+        }}
+      />
+      <ArrowRight
+        className="h-4 w-4 -ml-1 text-[#6D8196]"
+        strokeWidth={1.75}
+      />
     </div>
   );
 }
-
-/* ---------------------------------------------------------------------- */
-/* Horizontal connector (desktop)                                          */
-/* ---------------------------------------------------------------------- */
-
-function Connector({ visible, index, active }) {
-  return (
-    <div className="flex items-center justify-center w-12 lg:w-16 shrink-0">
-      <div className="relative w-full h-px overflow-hidden" style={{ background: "#6D819625" }}>
-        <div
-          className="absolute inset-y-0 left-0 h-px transition-all duration-700 ease-out"
-          style={{
-            background: "#6D8196",
-            opacity: active ? 0.6 : 0.3,
-            width: visible ? "100%" : "0%",
-            transitionDelay: `${index * 150 + 400}ms`,
-          }}
-        />
-        {visible && (
-          <div
-            className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
-            style={{
-              background: "#6D8196",
-              boxShadow: "0 0 8px 2px #6D819680",
-              animation: `connector-travel ${active ? "1.4s" : "3s"} linear infinite`,
-              animationDelay: `${index * 0.3}s`,
-            }}
-          />
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/* Vertical connector (mobile)                                              */
-/* ---------------------------------------------------------------------- */
-
-function VerticalConnector({ visible, index, active }) {
-  return (
-    <div className="flex items-center justify-center h-10 w-px relative">
-      <div className="relative w-px h-full overflow-hidden" style={{ background: "#6D819625" }}>
-        <div
-          className="absolute inset-x-0 top-0 w-px transition-all duration-700 ease-out"
-          style={{
-            background: "#6D8196",
-            opacity: active ? 0.6 : 0.3,
-            height: visible ? "100%" : "0%",
-            transitionDelay: `${index * 150 + 400}ms`,
-          }}
-        />
-        {visible && (
-          <div
-            className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-            style={{
-              background: "#6D8196",
-              boxShadow: "0 0 8px 2px #6D819680",
-              animation: `connector-travel-vertical ${active ? "1.4s" : "3s"} linear infinite`,
-              animationDelay: `${index * 0.3}s`,
-            }}
-          />
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/* Add to global stylesheet (e.g. index.css)                               */
-/* ---------------------------------------------------------------------- */
-
-/*
-@keyframes legal-scroll {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
-@keyframes connector-travel {
-  from { left: 0%; opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  to   { left: 100%; opacity: 0; }
-}
-@keyframes connector-travel-vertical {
-  from { top: 0%; opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  to   { top: 100%; opacity: 0; }
-}
-
-.animate-legal-scroll { animation: legal-scroll linear infinite; }
-*/
