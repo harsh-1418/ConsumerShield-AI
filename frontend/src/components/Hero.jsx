@@ -11,6 +11,7 @@ import {
   BrainCircuit,
   BadgeCheck,
 } from "lucide-react";
+import heroWatermark from "../assets/hero-watermark.png";
 
 const FEATURE_PILLS = [
   { label: "Know Your Rights", icon: BookOpen },
@@ -234,6 +235,36 @@ style={{
             fill="none"
           />
         </svg>
+
+        {/* Golden illustration watermark — static, behind all content */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center"
+        >
+          {/* Soft ambient golden glow behind the watermark */}
+          <div
+            className="absolute h-[70%] w-[80%] rounded-full blur-[120px]"
+            style={{
+              background:
+                "radial-gradient(closest-side, rgba(212,165,72,0.18), rgba(212,165,72,0.06) 55%, transparent 75%)",
+            }}
+          />
+          <img
+            src={heroWatermark}
+            alt=""
+            draggable={false}
+            loading="lazy"
+            decoding="async"
+            className="relative w-[125%] max-w-[1900px] select-none object-contain sm:w-[118%] md:w-[115%] lg:w-[120%]"
+            style={{
+              opacity: 0.2,
+              WebkitMaskImage:
+                "radial-gradient(ellipse 70% 70% at 50% 50%, #000 45%, rgba(0,0,0,0.6) 70%, transparent 92%)",
+              maskImage:
+                "radial-gradient(ellipse 70% 70% at 50% 50%, #000 45%, rgba(0,0,0,0.6) 70%, transparent 92%)",
+            }}
+          />
+        </div>
       </div>
 
       <div className="mx-auto grid min-h-svh max-w-7xl grid-cols-1 items-center gap-14 px-6 pt-28 pb-16 lg:grid-cols-[60fr_40fr] lg:gap-12 lg:pt-24 lg:pb-24">

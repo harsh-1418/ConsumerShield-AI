@@ -5,6 +5,7 @@ import sys, os, time
 from pathlib import Path
 from datetime import datetime
 from google import genai
+import traceback
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent / "rag"))
 from retrieve import retrieve
@@ -30,6 +31,7 @@ def analyze_complaint(body: ComplaintRequest):
         description = body.text
 
         laws = retrieve(description, top_k=5)
+        print(laws)
         context = "\n\n".join([f"[{r['source']}]\n{r['text']}" for r in laws])
 
         prompt = f"""You are a consumer rights expert in India.
@@ -55,7 +57,7 @@ Be concise and practical."""
         for attempt in range(3):
             try:
                 response = client.models.generate_content(
-                    model="models/gemini-2.5-flash",
+                    model="gemini-2.5-flash",
                     contents=prompt
                 )
                 break
@@ -85,5 +87,8 @@ Be concise and practical."""
             "status": "analyzed"
         }
 
+
     except Exception as e:
+        traceback.print_exc()
+        print("ERROR:", repr(e))
         raise HTTPException(status_code=500, detail=str(e))

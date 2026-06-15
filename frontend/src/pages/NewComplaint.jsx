@@ -25,6 +25,7 @@ import {
   Lightbulb,
   FileSignature,
 } from "lucide-react";
+import Navbar from "../components/layout/Navbar";
 
 const CATEGORIES = [
   "Electronics",
@@ -198,7 +199,10 @@ navigate("/case-insights", {
   }
 };
 
-  return (
+ return (
+  <>
+    <Navbar />
+
     <section className="relative isolate overflow-hidden pt-28 pb-24">
       {/* Background: layered ivory paper, glow, vignette */}
       <div aria-hidden className="absolute inset-0 -z-10">
@@ -661,6 +665,7 @@ navigate("/case-insights", {
 
 
 </section>
+</>
   );
 }
 
