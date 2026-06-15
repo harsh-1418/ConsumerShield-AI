@@ -33,3 +33,9 @@ app.include_router(router, prefix="/api/v1")
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.get("/")
+def root():
+    return {
+        "message": "ConsumerShield AI Backend Running"
+    }
