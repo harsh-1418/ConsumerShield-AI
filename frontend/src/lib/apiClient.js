@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000/api/v1";
+const BASE_URL = "http://127.0.0.1:8000/api/v1";
 
 export async function analyzeComplaint(text) {
   const res = await fetch(`${BASE_URL}/complaints/analyze`, {
@@ -9,7 +9,10 @@ export async function analyzeComplaint(text) {
     body: JSON.stringify({ text }),
   });
 
-  if (!res.ok) throw new Error("Analysis failed");
+  if (!res.ok) {
+  const text = await res.text();
+  throw new Error(text);
+}
 
   return res.json();
 }
@@ -27,6 +30,11 @@ export async function getCaseStrength(complaint) {
     }),
   });
 
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text);
+  }
+
   return res.json();
 }
 
@@ -40,6 +48,11 @@ export async function getAuthorities(complaint) {
       complaint,
     }),
   });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text);
+  }
 
   return res.json();
 }

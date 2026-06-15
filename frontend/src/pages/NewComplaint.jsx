@@ -4,6 +4,7 @@ import {
   getAuthorities,
 } from "../lib/apiClient";
 import { useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Upload,
@@ -67,6 +68,7 @@ function formatBytes(b) {
 }
 
 export default function NewComplaintWorkspace() {
+  const navigate = useNavigate();
   const [complaintTitle, setComplaintTitle] = useState("");
   const [complaintDescription, setComplaintDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -76,8 +78,8 @@ export default function NewComplaintWorkspace() {
   const [orderId, setOrderId] = useState("");
   const [evidenceFiles, setEvidenceFiles] = useState([]);  const [dragOver, setDragOver] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
-
   const descMax = 1500;
   const descCount = complaintDescription.length;
 
@@ -109,8 +111,44 @@ export default function NewComplaintWorkspace() {
   const removeFile = (idx) =>
     setEvidenceFiles((prev) => prev.filter((_, i) => i !== idx));
 
+  const validateForm = () => {
+  const newErrors = {};
+
+  if (!complaintTitle.trim()) {
+    newErrors.complaintTitle = "Complaint title is required";
+  }
+
+  if (!category) {
+    newErrors.category = "Please select a category";
+  }
+
+  if (!company.trim()) {
+    newErrors.company = "Company name is required";
+  }
+
+  if (!incidentDate) {
+    newErrors.incidentDate = "Date of incident is required";
+  }
+
+  if (!complaintDescription.trim()) {
+    newErrors.complaintDescription =
+      "Complaint description is required";
+  } else if (complaintDescription.trim().length < 30) {
+    newErrors.complaintDescription =
+      "Description must be at least 30 characters";
+  }
+
+  setErrors(newErrors);
+
+  return Object.keys(newErrors).length === 0;
+};
+
   const handleSubmit = async (e) => {
   e.preventDefault();
+
+  if (!validateForm()) {
+    return;
+  }
 
   if (!canSubmit) return;
 
@@ -135,20 +173,26 @@ ${complaintDescription}
 `;
 
     // Call backend APIs
-    const analysis = await analyzeComplaint(complaintText);
-    const strength = await getCaseStrength(complaintText);
-    const authorities = await getAuthorities(complaintText);
+  const [analysis, strength, authorities] = await Promise.all([
+  analyzeComplaint(complaintText),
+  getCaseStrength(complaintText),
+  getAuthorities(complaintText),
+]);
 
-    console.log("Analysis:", analysis);
-    console.log("Strength:", strength);
-    console.log("Authorities:", authorities);
+console.log("Analysis completed successfully.");
 
-    alert("Complaint analyzed successfully!");
-
-    // We will replace this with navigation in the next step
+navigate("/case-insights", {
+  state: {
+    analysis,
+    strength,
+    authorities,
+  },
+});
   } catch (err) {
     console.error(err);
-    alert("Something went wrong while analyzing your complaint.");
+    alert(
+  "Unable to analyze your complaint right now. Please check that the backend server is running and try again."
+);
   } finally {
     setSubmitting(false);
   }
@@ -260,6 +304,11 @@ ${complaintDescription}
               onChange={setComplaintTitle}
               placeholder="e.g. Defective laptop delivered, refund denied"
             />
+            {errors.complaintTitle && (
+              <p className="mt-2 text-sm text-red-500">
+                {errors.complaintTitle}
+              </p>
+            )}
 
             {/* Category chips */}
             <div className="mt-7">
@@ -305,7 +354,14 @@ ${complaintDescription}
               </div>
             </div>
 
+            {errors.category && (
+              <p className="mt-2 text-sm text-red-500">
+                {errors.category}
+              </p>
+            )}
+
             {/* Description */}
+            
             <div className="mt-7">
               <label
                 htmlFor="description"
@@ -330,6 +386,11 @@ ${complaintDescription}
                 placeholder="Describe what happened, when, who was involved, what you expected vs. what you received, and any resolution attempts so far…"
                 className="w-full resize-y rounded-2xl border border-[#6D8196]/20 bg-white/70 px-4 py-3.5 text-[15px] leading-relaxed text-[#4A4A4A] placeholder:text-[#4A4A4A]/45 transition-all duration-200 focus:border-[#6D8196]/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#6D8196]/15"
               />
+              {errors.complaintDescription && (
+                <p className="mt-2 text-sm text-red-500">
+                  {errors.complaintDescription}
+                </p>
+              )}
             </div>
 
             {/* Two col details */}
@@ -342,6 +403,11 @@ ${complaintDescription}
                 placeholder="e.g. ShopMart India Pvt. Ltd."
                 icon={Building2}
               />
+              {errors.company && (
+  <p className="text-sm text-red-500">
+    {errors.company}
+  </p>
+)}
               <FloatingField
                 id="incidentDate"
                 label="Date of Incident"
@@ -350,6 +416,11 @@ ${complaintDescription}
                 type="date"
                 icon={Calendar}
               />
+              {errors.incidentDate && (
+  <p className="text-sm text-red-500">
+    {errors.incidentDate}
+  </p>
+)}
               <FloatingField
                 id="amount"
                 label="Amount (₹)"
@@ -585,8 +656,11 @@ ${complaintDescription}
             </div>
           </aside>
         </div>
-      </div>
-    </section>
+     </div>
+
+
+
+</section>
   );
 }
 
@@ -714,5 +788,6 @@ function DriftingLegalText() {
         ))}
       </div>
     </div>
+    
   );
 }

@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Scale, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "New Complaint", href: "/new-complaint" },
-  { label: "Case Insights", href: "/case-insights" },
+  { label: "Home", to: "/" },
+  { label: "New Complaint", to: "/new-complaint" },
+  { label: "Case Insights", to: "/case-insights" },
   { label: "How It Works", href: "/#how-it-works" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "#about" },
 ];
 
 export default function Navbar() {
@@ -46,17 +46,26 @@ export default function Navbar() {
           </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {NAV_LINKS.map((l) => (
-            <li key={l.label}>
-              <Link
-                to={l.href}
-                className="rounded-md px-3.5 py-2 text-sm font-medium text-[#4A4A4A]/80 transition-colors duration-200 hover:bg-[#6D8196]/10 hover:text-[#4A4A4A]"
-              >
-                {l.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+  {NAV_LINKS.map((l) => (
+    <li key={l.label}>
+      {l.to ? (
+        <Link
+          to={l.to}
+          className="rounded-md px-3.5 py-2 text-sm font-medium text-[#4A4A4A]/80 transition-colors duration-200 hover:bg-[#6D8196]/10 hover:text-[#4A4A4A]"
+        >
+          {l.label}
+        </Link>
+      ) : (
+        <a
+          href={l.href}
+          className="rounded-md px-3.5 py-2 text-sm font-medium text-[#4A4A4A]/80 transition-colors duration-200 hover:bg-[#6D8196]/10 hover:text-[#4A4A4A]"
+        >
+          {l.label}
+        </a>
+      )}
+    </li>
+  ))}
+</ul>
 
         <div className="hidden md:block">
           <a
@@ -83,13 +92,21 @@ export default function Navbar() {
           <ul className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {NAV_LINKS.map((l) => (
               <li key={l.label}>
-                <a
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-md px-3 py-2.5 text-sm font-medium text-[#4A4A4A] hover:bg-[#6D8196]/10"
-                >
-                  {l.label}
-                </a>
+                {l.to ? (
+  <Link
+    to={l.to}
+    className="rounded-md px-3.5 py-2 text-sm font-medium text-[#4A4A4A]/80 transition-colors duration-200 hover:bg-[#6D8196]/10 hover:text-[#4A4A4A]"
+  >
+    {l.label}
+  </Link>
+) : (
+  <a
+    href={l.href}
+    className="rounded-md px-3.5 py-2 text-sm font-medium text-[#4A4A4A]/80 transition-colors duration-200 hover:bg-[#6D8196]/10 hover:text-[#4A4A4A]"
+  >
+    {l.label}
+  </a>
+)}
               </li>
             ))}
             <li className="pt-2">
