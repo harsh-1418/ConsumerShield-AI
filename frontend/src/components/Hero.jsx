@@ -74,7 +74,7 @@ function LegalTextLayer() {
       <div
         className="absolute left-0 top-full w-full animate-legal-scroll px-6 py-7 text-[#4A4A4A]"
         style={{
-          opacity: 0.03,
+          opacity: 0.05,
           columnCount: 2,
           columnGap: "1.25rem",
           columnRule: "1px solid rgba(74,74,74,0.05)",
@@ -163,7 +163,7 @@ style={{
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(120% 80% at 50% 0%, #FFFFE8 0%, #FBF8DC 45%, #F1EED2 100%)",
+              "radial-gradient(120% 80% at 50% 0%, #FFFDF4 0%, #FCF9E8 45%, #F7F2DF 100%)",
           }}
         />
 
@@ -257,7 +257,7 @@ style={{
             decoding="async"
             className="relative w-[125%] max-w-[1900px] select-none object-contain sm:w-[118%] md:w-[115%] lg:w-[120%]"
             style={{
-              opacity: 0.2,
+              opacity: 0.4,
               WebkitMaskImage:
                 "radial-gradient(ellipse 70% 70% at 50% 50%, #000 45%, rgba(0,0,0,0.6) 70%, transparent 92%)",
               maskImage:
@@ -353,7 +353,7 @@ style={{
                       className="absolute inset-0 scale-150 rounded-full blur-3xl"
                       style={{
                         background:
-                          "radial-gradient(circle, rgba(255,255,227,0.45), transparent 70%)",
+                          "radial-gradient(circle, rgba(255,255,227,0.70), transparent 70%)",
                       }}
                     />
 
@@ -418,7 +418,7 @@ style={{
 
             {/* Floating legal document cards */}
             <div
-              className="absolute left-[2%] top-[6%] w-48 -rotate-2 animate-float [animation-delay:0.4s] rounded-xl bg-white/85 p-3.5 shadow-[0_18px_50px_-20px_rgba(74,74,74,0.35)] ring-1 ring-[#6D8196]/15 backdrop-blur-md"
+              className="absolute left-[2%] top-[6%] w-48 -rotate-2 animate-float [animation-delay:0.4s] rounded-xl bg-white/94 p-3.5 shadow-[0_28px_70px_-18px_rgba(74,74,74,0.42)] ring-1 ring-[#6D8196]/15 backdrop-blur-md"
               style={par(-28)}
             >
               <div className="flex items-center gap-2">
@@ -436,7 +436,7 @@ style={{
             </div>
 
             <div
-              className="absolute right-[2%] bottom-[18%] w-48 rotate-2 animate-float [animation-delay:1.8s] rounded-xl bg-white/85 p-3.5 shadow-[0_18px_50px_-20px_rgba(74,74,74,0.35)] ring-1 ring-[#6D8196]/15 backdrop-blur-md"
+              className="absolute right-[2%] bottom-[18%] w-48 rotate-2 animate-float [animation-delay:1.8s] rounded-xl bg-white/94 p-3.5 shadow-[0_28px_70px_-18px_rgba(74,74,74,0.42)] ring-1 ring-[#6D8196]/15 backdrop-blur-md"
               style={par(-30)}
             >
               <div className="flex items-center gap-2">
@@ -447,13 +447,13 @@ style={{
               </div>
               <p className="mt-2 text-xs font-medium text-[#4A4A4A]">Case strength · 92% match</p>
               <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#CBCBCB]/60">
-                <div className="h-full w-[92%] rounded-full bg-[#6D8196]" />
+                <div className="h-full w-[92%] rounded-full bg-gradient-to-r from-[#6D8196] to-[#8397AA]" />
               </div>
             </div>
 
             {/* Rights Identified card */}
             <div
-              className="absolute left-[6%] bottom-[4%] w-52 -rotate-1 animate-float [animation-delay:1.2s] rounded-xl bg-white/85 p-3.5 shadow-[0_18px_50px_-20px_rgba(74,74,74,0.35)] ring-1 ring-[#6D8196]/15 backdrop-blur-md"
+              className="absolute left-[6%] bottom-[4%] w-52 -rotate-1 animate-float [animation-delay:1.2s] rounded-xl bg-white/94 p-3.5 shadow-[0_28px_70px_-18px_rgba(74,74,74,0.42)] ring-1 ring-[#6D8196]/15 backdrop-blur-md"
               style={par(-26)}
             >
               <div className="flex items-center gap-2">
@@ -499,15 +499,16 @@ style={{
             Analyze complaints, discover your rights, and generate AI-powered legal guidance in seconds.
           </p>
 
-          <div className="mt-9 animate-fade-up [animation-delay:320ms]" id="get-started">
-            <button
-              type="button"
-              className="group inline-flex items-center gap-2 rounded-xl bg-[#6D8196] px-8 py-4 text-base font-semibold text-[#FFFFE3] shadow-[0_14px_36px_-14px_rgba(109,129,150,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[#5b6d80] hover:shadow-[0_22px_50px_-16px_rgba(109,129,150,0.8)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6D8196] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFE3]"
-            >
-              Get Started
-              <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
-          </div>
+          <div className="mt-9 animate-fade-up [animation-delay:320ms]">
+  <a
+    href="#cta"
+    className="group inline-flex items-center gap-2 rounded-xl bg-[#6D8196] px-8 py-4 text-base font-semibold text-[#FFFFE3] shadow-[0_14px_36px_-14px_rgba(109,129,150,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_22px_50px_-16px_rgba(109,129,150,0.8)]"
+  >
+    Get Started
+    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+  </a>
+</div>
+              
         </div>
       </div>
     </section>
