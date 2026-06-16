@@ -38,24 +38,20 @@
   }
 
   to {
-    transform: translateY(-100%);
-  }
-}
-
-@keyframes legal-scroll {
-  from {
-    transform: translateY(0%);
-  }
-
-  to {
-    transform: translateY(-100%);
+    transform: translateY(-50%);
   }
 }
 
 .animate-legal-scroll {
-  animation: legal-scroll 48s linear infinite;
+  animation-name: legal-scroll;
+  animation-duration: 26s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+  animation-fill-mode: both;
+  animation-play-state: running;
+  will-change: transform;
 }
-
 
 @keyframes orbit {
   from {
@@ -75,11 +71,6 @@
   animation: orbit 10s linear infinite reverse;
 }
 
-
-@keyframes legal-scroll {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
 @keyframes connector-travel {
   from { left: 0%; opacity: 0; }
   10%  { opacity: 1; }
@@ -93,17 +84,11 @@
   to   { top: 100%; opacity: 0; }
 }
 
-.animate-legal-scroll { animation: legal-scroll linear infinite; }
-@keyframes legal-scroll {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
 @keyframes breathe {
   0%, 100% { transform: scale(1); opacity: 0.8; }
   50% { transform: scale(1.08); opacity: 1; }
 }
 
-.animate-legal-scroll { animation: legal-scroll linear infinite; }
 .animate-breathe { animation: breathe 6s ease-in-out infinite; }
 @keyframes legalScroll0 {
   from {
@@ -139,4 +124,8 @@
   to {
     transform: translateY(-100%);
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }

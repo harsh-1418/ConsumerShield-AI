@@ -44,8 +44,9 @@ export default function CTASection() {
 
   return (
     <section
-      ref={sectionRef}
-      className="relative w-full overflow-hidden flex items-center justify-center py-24 px-6"
+  id="cta"
+  ref={sectionRef}
+  className="relative w-full overflow-hidden flex items-center justify-center py-24 px-6"
       style={{
         minHeight: "80vh",
         background: "linear-gradient(180deg, #F4F0E2 0%, #F8F5E8 50%, #FCFAF2 100%)",
@@ -242,21 +243,3 @@ function BackgroundTexture() {
     </div>
   );
 }
-
-/* ---------------------------------------------------------------------- */
-/* Add to global stylesheet (e.g. index.css) — reuse if already added      */
-/* ---------------------------------------------------------------------- */
-
-/*
-@keyframes legal-scroll {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
-@keyframes breathe {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.08); opacity: 1; }
-}
-
-.animate-legal-scroll { animation: legal-scroll linear infinite; }
-.animate-breathe { animation: breathe 6s ease-in-out infinite; }
-*/
