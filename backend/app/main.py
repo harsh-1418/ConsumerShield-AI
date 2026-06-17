@@ -25,7 +25,7 @@ app.add_middleware(
         FRONTEND_URL,
         "http://localhost:5173",
         "http://localhost:3000",
-        "https://consumershield.vercel.app"
+        "https://consumer-shield-ai.vercel.app"
     ],
     allow_methods=["*"],
     allow_headers=["*"],
