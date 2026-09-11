@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { ShieldCheck, Lock, Zap, Scale, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 /**
  * ConsumerShield AI — Final CTA Section
@@ -21,6 +22,7 @@ const TRUST_ITEMS = [
 ];
 
 export default function CTASection() {
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
   const sectionRef = useRef(null);
@@ -140,7 +142,9 @@ export default function CTASection() {
             style={{ transitionDelay: "300ms" }}
           >
             <button
-              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-base sm:text-lg w-full sm:w-auto transition-all duration-500 ease-out hover:-translate-y-0.5 hover:scale-[1.02]"
+  type="button"
+  onClick={() => navigate("/new-complaint")}
+  className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-base sm:text-lg w-full sm:w-auto transition-all duration-500 ease-out hover:-translate-y-0.5 hover:scale-[1.02]"
               style={{
                 background: "#6D8196",
                 color: "#FCFAF2",
