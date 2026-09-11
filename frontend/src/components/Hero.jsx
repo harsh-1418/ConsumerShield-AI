@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Shield,
   Scale,
@@ -107,6 +108,7 @@ function LegalTextLayer() {
 }
 
 export default function Hero() {
+  const navigate = useNavigate();
   const ref = useRef(null);
   const [p, setP] = useState({ x: 0, y: 0 });
   const [reduced, setReduced] = useState(false);
@@ -500,13 +502,14 @@ style={{
           </p>
 
           <div className="mt-9 animate-fade-up [animation-delay:320ms]">
-  <a
-    href="#cta"
-    className="group inline-flex items-center gap-2 rounded-xl bg-[#6D8196] px-8 py-4 text-base font-semibold text-[#FFFFE3] shadow-[0_14px_36px_-14px_rgba(109,129,150,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_22px_50px_-16px_rgba(109,129,150,0.8)]"
-  >
-    Get Started
-    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-  </a>
+  <button
+  type="button"
+  onClick={() => navigate("/new-complaint")}
+  className="group inline-flex items-center gap-2 rounded-xl bg-[#6D8196] px-8 py-4 text-base font-semibold text-[#FFFFE3] shadow-[0_14px_36px_-14px_rgba(109,129,150,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_22px_50px_-16px_rgba(109,129,150,0.8)]"
+>
+  Get Started
+  <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+</button>
 </div>
               
         </div>

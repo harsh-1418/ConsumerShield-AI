@@ -68,12 +68,12 @@ export default function Navbar() {
 </ul>
 
         <div className="hidden md:block">
-          <a
-            href="#get-started"
-            className="inline-flex items-center rounded-xl bg-[#6D8196] px-5 py-2.5 text-sm font-semibold text-[#FFFFE3] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#5b6d80] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6D8196] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFE3]"
-          >
-            Get Started
-          </a>
+          <Link
+  to="/new-complaint"
+  className="inline-flex items-center rounded-xl bg-[#6D8196] px-5 py-2.5 text-sm font-semibold text-[#FFFFE3] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#5b6d80] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6D8196] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFE3]"
+>
+  Get Started
+</Link>
         </div>
 
         <button
@@ -110,13 +110,13 @@ export default function Navbar() {
               </li>
             ))}
             <li className="pt-2">
-              <a
-                href="#get-started"
-                onClick={() => setOpen(false)}
+              <Link
+  to="/new-complaint"
+  onClick={() => setOpen(false)}
                 className="block rounded-xl bg-[#6D8196] px-5 py-3 text-center text-sm font-semibold text-[#FFFFE3] shadow-sm hover:bg-[#5b6d80]"
               >
                 Get Started
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
